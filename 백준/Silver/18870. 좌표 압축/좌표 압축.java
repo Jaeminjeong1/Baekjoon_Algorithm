@@ -2,31 +2,31 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
 
-        int N = Integer.parseInt(br.readLine());
-        Map<Integer, Integer> map = new HashMap<>();
-        int[] origin = new int[N];
-        int[] sorted = new int[N];
+        int n = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            origin[i] = sorted[i] = Integer.parseInt(st.nextToken());
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(Integer.parseInt(st.nextToken()));
         }
 
-        Arrays.sort(sorted);
-        
-        int rank = 0;
-        for (int i : sorted) {
-            if (!map.containsKey(i)) {
-                map.put(i, rank++);
-            }
+        Set<Integer> set = new HashSet<>(list);
+        List<Integer> sorted = new ArrayList<>(set);
+        Collections.sort(sorted);
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < sorted.size(); i++) {
+            map.put(sorted.get(i), i);
         }
 
-        for (int o : origin) {
-            sb.append(map.get(o)).append(" ");
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : list) {
+            sb.append(map.get(i)).append(" ");
         }
 
         System.out.println(sb);
