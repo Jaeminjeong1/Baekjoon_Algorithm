@@ -1,29 +1,30 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        HashSet<String> set = new HashSet<>();
 
-        int N = Integer.parseInt(br.readLine());
+        int n = Integer.parseInt(br.readLine());
 
-        for (int i = 0; i < N; i++) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
             set.add(br.readLine());
         }
 
         ArrayList<String> list = new ArrayList<>(set);
 
         list.sort((a, b) -> {
-            if(a.length() == b.length()) return a.compareTo(b);
-            return a.length() - b.length();
-        });
+            if (a.length() != b.length()) {
+                return a.length() - b.length();
+            }
+            return a.compareTo(b);
+            }
+        );
 
-        for (String i : list) {
-            sb.append(i).append("\n");
+        for (String s : list) {
+            System.out.println(s);
         }
-        System.out.println(sb);
     }
 }
