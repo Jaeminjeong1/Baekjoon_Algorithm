@@ -2,53 +2,50 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N, C;
-    static int[] house;
+
+    static List<Long> list;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         StringTokenizer st = new StringTokenizer(br.readLine());
+        long N = Long.parseLong(st.nextToken());
+        long C = Long.parseLong(st.nextToken());
 
-        N = Integer.parseInt(st.nextToken());
-        C = Integer.parseInt(st.nextToken());
-
-        house = new int[N];
+        list = new ArrayList<>();
         for (int i = 0; i < N; i++) {
-            house[i] = Integer.parseInt(br.readLine());
+            long n = Long.parseLong(br.readLine());
+            list.add(n);
         }
 
-        Arrays.sort(house);
+        Collections.sort(list);
+        long hi = list.get(list.size() - 1) - list.get(0) + 1;
+        long lo = 0;
 
-        int left = 1; // 최소 거리
-        int right = house[N - 1] - house[0]; // 최대 거리
-        int answer = 0;
 
-        while (left <= right) {
-            int mid = (left + right) / 2;
-
-            if (canInstall(mid)) {
-                answer = mid; // 설치 가능 → 거리 늘려보기
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+        while (lo + 1 < hi) {
+            long mid = (hi + lo) / 2;
+            if (check(mid, C)) {
+                lo = mid;
             }
+            else hi = mid;
         }
 
-        System.out.println(answer);
+        System.out.println(lo);
     }
 
-    // 공유기 설치 가능 여부 확인
-    static boolean canInstall(int distance) {
-        int count = 1; // 첫 집에 설치
-        int lastLocation = house[0];
+    private static boolean check(long distance, long c) {
+        long count = 1;
+        long lastPicked = list.get(0);
 
-        for (int i = 1; i < N; i++) {
-            if (house[i] - lastLocation >= distance) {
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i) - lastPicked >= distance) {
                 count++;
-                lastLocation = house[i];
+                lastPicked = list.get(i);
             }
         }
 
-        return count >= C;
+        return count >= c;
     }
+
 }
