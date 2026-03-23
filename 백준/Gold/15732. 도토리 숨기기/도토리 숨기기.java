@@ -22,7 +22,7 @@ public class Main {
         }
 
         long lo = 0;
-        long hi = size;
+        long hi = size + 1;
 
         while (lo + 1 < hi) {
             long mid = (hi + lo) / 2;
