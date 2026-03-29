@@ -30,45 +30,44 @@ public class Main {
             }
         }
 
-        bfs();
-        System.out.println(getAnswer());
+        System.out.println(bfs());
     }
 
-    private static void bfs() {
+    private static int bfs() {
+        int days = -1;
+
         while (!queue.isEmpty()) {
-            int[] current = queue.poll();
-            int n = current[0];
-            int m = current[1];
+            int size = queue.size();
 
-            for (int i = 0; i < 4; i++) {
-                int nr = n + dr[i];
-                int nc = m + dc[i];
+            for (int i = 0; i < size; i++) {
+                int[] current = queue.poll();
+                int n = current[0];
+                int m = current[1];
 
-                if (nr < 0 || nr >= N || nc < 0 || nc >= M) {
-                    continue;
+                for (int d = 0; d < 4; d++) {
+                    int nr = n + dr[d];
+                    int nc = m + dc[d];
+
+                    if (nr < 0 || nr >= N || nc < 0 || nc >= M) continue;
+                    if (arr[nr][nc] != 0) continue;
+
+                    arr[nr][nc] = 1;
+                    queue.offer(new int[]{nr, nc});
                 }
-                if (arr[nr][nc] != 0) {
-                    continue;
-                }
-
-                arr[nr][nc] = arr[n][m] + 1;
-                queue.offer(new int[]{nr, nc});
             }
-        }
-    }
 
-    private static int getAnswer() {
-        int max = 0;
+            days++;
+        }
 
         for (int r = 0; r < N; r++) {
             for (int c = 0; c < M; c++) {
                 if (arr[r][c] == 0) {
                     return -1;
                 }
-                max = Math.max(max, arr[r][c]);
             }
         }
 
-        return max - 1;
+        return Math.max(days, 0);
     }
+
 }
