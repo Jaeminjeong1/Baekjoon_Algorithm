@@ -10,10 +10,8 @@ class Solution {
         for(int n : nums){
             map.put(n, map.getOrDefault(n, 0) + 1);
         }
-        int count = 0;
-        for(int key : map.keySet()){
-            count++;
-        }
+        
+        int count = map.keySet().size();
         
         answer = Math.min(count, size);
         
