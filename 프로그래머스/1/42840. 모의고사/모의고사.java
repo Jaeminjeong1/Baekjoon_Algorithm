@@ -11,7 +11,6 @@ class Solution {
 
         int[] scores = new int[3];
 
-        // 각 수포자의 정답 개수 계산
         for (int i = 0; i < answers.length; i++) {
             for (int j = 0; j < patterns.length; j++) {
                 if (answers[i] == patterns[j][i % patterns[j].length]) {
